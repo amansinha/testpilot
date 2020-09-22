@@ -1,7 +1,7 @@
-colorama
-cython
-numba
-numpy
-opencv-python
-pygame
-pyzmq
+colorama==0.4.3
+cython>=0.29.21
+numba>=0.49.1
+numpy>=1.17.5
+opencv-python>=4.4.0.42
+pygame==1.9.6
+pyzmq==19.0.2
