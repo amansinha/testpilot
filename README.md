@@ -18,7 +18,7 @@ Deploying the planning and control elements together with the perception pipelin
 
 ## Citing
 
-If you find this code useful in your work, please consider citing:
+If you find this code useful in your work, please consider citing our (paper)[https://arxiv.org/abs/1912.03618]:
 
 ```
 @article{norden2019efficient,
