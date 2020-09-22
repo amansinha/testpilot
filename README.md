@@ -53,6 +53,9 @@ Dependencies are detailed in requirements.txt
 
 Newer versions of these libraries likely work but have not been tested.
 
+## CARLA (demo only)
+Get CARLA from https://github.com/carla-simulator/carla/releases. We have validated TestPilot with CARLA releases 0.9.6 and 0.9.9.
+
 
 # Setup
 0. Run `pip3 install -r requirements.txt`
