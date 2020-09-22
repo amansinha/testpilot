@@ -8,17 +8,17 @@ Welcome to TestPilot
 
 TestPilot is a minimally invasive fork of OpenPilot 0.5, a SAE Level 2 driver-assistance system designed to be integrated with Comma AI's proprietary camera hardware and a customized software platform based on the Android operating system. TestPilot includes a simple OpenAI gym like interface to CARLA and is executed within a Docker container such that multiple TestPilot agents can run simultaneously on the same computer.
 
-## Running SNPE on X86
+### Running SNPE on X86
 A primary challenge associated with testing OpenPilot in a simulated environment is the tight integration between the neural networks in the perception system and the EON hardware. The networks are distributed in binary form and use the Snapdragon Neural Processing Engine (SNPE) accelerator. The first network, ``posenet``, infers the motion of the camera sensor (rather than to localize the vehicle in a map). The predicted motion allows OpenPilot to estimate the three-dimensional locations of objects detected by the ``driving_model`` network. 
 Our fork, TestPilot, utilizes an SNPE SDK feature which enables the execution of network binaries using OpenCL. Additionally, we create a fake camera driver which inputs simulated, recorded, or real images from any source
 into an OpenCL memory buffer. A handful of additional modifications were made to the build script in order to source X86 compatible versions of dependencies; however, they do not alter the underlying perception modules.
 
-## Synchronous execution
+### Synchronous execution
 Deploying the planning and control elements together with the perception pipeline in a simulation environment requires further refinements. The perception and planning elements use a real-time clock to stamp vehicle-state messages. However, the simulation clock does not necessarily match wall-clock time. To address this problem, TestPilot receives a clock signal from the simulator. Furthermore, OpenPilot heavily utilizes asynchronous message passing; this induces non-determinism in the execution order of the control stack. In order to improve the repeatability of the experiments, TestPilot forces sequential execution of the control components. Lastly, OpenPilot utilizes a PID controller operating at 100Hz to actuate steering and throttle mechanisms and track the desired state (updated by the planning module at 20Hz). In order to avoid significant time costs and execute the simulator at 20Hz, TestPilot sends its planning module's desired state to the simulator, and we perform tracking on the simulator side.
 
 ## Citing
 
-If you find this code useful in your work, please consider citing our (paper)[https://arxiv.org/abs/1912.03618]:
+If you find this code useful in your work, please consider citing our [paper][https://arxiv.org/abs/1912.03618]:
 
 ```
 @article{norden2019efficient,
