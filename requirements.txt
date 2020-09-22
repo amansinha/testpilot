@@ -1,0 +1,7 @@
+colorama
+cython
+numba
+numpy
+opencv-python
+pygame
+pyzmq

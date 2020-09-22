@@ -1,0 +1,4 @@
+*.pyc
+*.npz
+*.pkl
+.DS_Store

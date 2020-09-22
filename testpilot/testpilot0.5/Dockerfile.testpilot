@@ -1,0 +1,107 @@
+FROM nvidia/cudagl:9.0-base-ubuntu16.04
+SHELL ["/bin/bash", "-c"]
+ENV PYTHONUNBUFFERED 1
+
+# install standard utilities
+RUN apt-get update && apt-get install -y \
+    apt-utils\
+    unzip\
+    tar\
+    xz-utils\
+    alien\
+    build-essential \
+    clang \
+    vim \
+    screen \
+    wget \
+    bzip2 \
+    git \
+    libglib2.0-0 \
+    python-pip \
+    libcapnp-dev \
+    libffi-dev \
+    libusb-1.0-0 \
+    libssl-dev \
+    ocl-icd-libopencl1 \
+    ocl-icd-opencl-dev \
+    opencl-headers\
+    curl\
+    autoconf\
+    automake\
+    clang-3.8\
+    libtool\
+    cmake\
+    pkg-config\
+    libsodium-dev\
+    valgrind\
+    uuid-dev\
+    libpcre3-dev\
+    emacs\
+    clinfo\
+    libopencv-dev\
+    tmux\
+    libcanberra-gtk-module\
+    ffmpeg\
+    libavformat-dev\
+    libavcodec-dev\
+    libavdevice-dev\
+    libavutil-dev\
+    libswscale-dev\
+    libavresample-dev\
+    libavfilter-dev\
+    libarchive-dev\
+    python-qt4
+
+# install the opencl driver
+RUN wget http://registrationcenter-download.intel.com/akdlm/irc_nas/vcp/15625/intel_sdk_for_opencl_applications_2019.4.314.tar.gz
+RUN tar xvzf intel_sdk_for_opencl_applications_2019.4.314.tar.gz
+WORKDIR intel_sdk_for_opencl_applications_2019.4.314
+RUN rm silent.cfg
+COPY silent.cfg .
+RUN ./install.sh -s silent.cfg
+
+# isntall python utilities
+WORKDIR /tmp
+RUN pip install numpy==1.11.2 scipy==0.18.1 matplotlib==2.1.2 Cython scikit-build
+RUN apt-get install -y python-h5py
+RUN pip install markdown==2.6.8
+COPY requirements_openpilot.txt /tmp/
+RUN pip install -r /tmp/requirements_openpilot.txt
+ENV PYTHONPATH /tmp/openpilot:$PYTHONPATH
+
+# install SNPE
+COPY ./snpe-1.25.1.310 /tmp/snpe
+COPY ./install_external.sh /tmp/install_external.sh
+ENV SNPE_ROOT=/tmp/snpe
+ENV PATH "$PATH:/tmp/libyuv/include"
+ENV PATH "$PATH:/tmp/libyuv/include/libyuv"
+RUN /tmp/install_external.sh
+SHELL ["/bin/sh", "-c", "-l"]
+RUN ["/bin/bash", "-c", "-l", "source /tmp/snpe/bin/dependencies.sh"]
+RUN ["/bin/bash", "-c", "-l", "source /tmp/snpe/bin/check_python_depends.sh"]
+RUN ["/bin/bash", "-c", "-l", "source /tmp/snpe/bin/envsetup.sh -t /usr/local/lib/python2.7/dist-packages/tensorflow"]
+RUN echo source /tmp/snpe/bin/envsetup.sh -t /usr/local/lib/python2.7/dist-packages/tensorflow >> ~/.bashrc
+
+# install openpilot stuff
+COPY ./common /tmp/openpilot/common
+COPY ./cereal /tmp/openpilot/cereal
+COPY ./opendbc /tmp/openpilot/opendbc
+COPY ./selfdrive /tmp/openpilot/selfdrive
+COPY ./phonelibs /tmp/openpilot/phonelibs
+COPY ./pyextra /tmp/openpilot/pyextra
+COPY ./models /tmp/openpilot/models
+COPY ./tools /tmp/openpilot/tools
+COPY ./params /data/params
+RUN make -C /tmp/openpilot/cereal/
+RUN make -C /tmp/openpilot/selfdrive/visiond
+RUN make clean -C /tmp/openpilot/selfdrive/controls/lib/lateral_mpc
+RUN make clean -C /tmp/openpilot/selfdrive/controls/lib/longitudinal_mpc
+RUN make -C /tmp/openpilot/selfdrive/controls/lib/lateral_mpc
+RUN make -C /tmp/openpilot/selfdrive/controls/lib/longitudinal_mpc
+RUN make -C /tmp/openpilot/selfdrive/can
+RUN make -C /tmp/openpilot/common/kalman
+RUN pip install -r /tmp/openpilot/tools/requirements.txt
+
+WORKDIR /tmp/openpilot
+ENTRYPOINT bash
+
