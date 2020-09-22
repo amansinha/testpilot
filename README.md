@@ -64,9 +64,12 @@ Get CARLA from https://github.com/carla-simulator/carla/releases. We have valida
 3. Run `build_docker.sh`
 
 # Running the demo
-0. Start CARLA on port 2010
-1. Navigate to `demo`
-2. Run `python3 demo.py`
+0. Start CARLA on port 2010.
+	
+	An example of this command would be `DISPLAY= ./CarlaUE4.sh -opengl -quality-level=Epic -carla-world-port=2010` from a directory that contains the binary `CarlaUE4.sh`
+1. Run `export PYTHONPATH=$PYTHONPATH:<path-to-carla>/PythonAPI/carla/dist/carla-<carla_version_and_arch>.egg`
+2. Navigate to `demo`
+3. Run `python3 demo.py`
 
 Optionally run `python3 demo.py --help` for more options like starting multiple agents.
 
