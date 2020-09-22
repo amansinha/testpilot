@@ -31,7 +31,7 @@ If you find this code useful in your work, please consider citing:
 We have tested the code on Ubuntu 16.04, 18.04, and 20.04 machines. It is likely that the code will run (in Docker) on correctly configured OSX and Windows machines but we do not provide any support for these operating systems.
 
 ## Python 3.7
-Depending on your Linux distro this should already be preinstalled
+Depending on your Linux distro this should already be preinstalled. This dependency is due to the requirements of CARLA 0.9.9 rather than any aspect of TestPilot.
 
 ## SNPE
 1. Create a Qualcomm developer at https://myaccount.qualcomm.com/signup?target=https%3A%2F%2Fdeveloper.qualcomm.com
