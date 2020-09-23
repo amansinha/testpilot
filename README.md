@@ -6,7 +6,7 @@ Welcome to TestPilot
 ======
 > **WARNING**: This repository is provided solely for simulation research purposes. It should not be used to drive cars. 
 
-TestPilot is a minimally invasive fork of OpenPilot 0.5, a SAE Level 2 driver-assistance system designed to be integrated with Comma AI's proprietary camera hardware and a customized software platform based on the Android operating system. TestPilot includes a simple OpenAI gym like interface to CARLA and is executed within a Docker container such that multiple TestPilot agents can run simultaneously on the same computer.
+TestPilot is a minimally invasive fork of OpenPilot 0.5, a SAE Level 2 driver-assistance system designed to be integrated with Comma AI's proprietary camera hardware and a customized software platform based on the Android operating system. TestPilot eliminates the need for ARM and Qualcomm hardware enabling reliable, synchronous, and deterministic execution of the full OpenPilot stack on your desktop computer. TestPilot includes a simple OpenAI gym like interface to CARLA and is executed within a Docker container such that multiple TestPilot agents can run simultaneously on the same computer.
 
 ### Running SNPE on X86
 A primary challenge associated with testing OpenPilot in a simulated environment is the tight integration between the neural networks in the perception system and the EON hardware. The networks are distributed in binary form and use the Snapdragon Neural Processing Engine (SNPE) accelerator. The first network, ``posenet``, infers the motion of the camera sensor (rather than to localize the vehicle in a map). The predicted motion allows OpenPilot to estimate the three-dimensional locations of objects detected by the ``driving_model`` network. 
