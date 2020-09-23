@@ -36,7 +36,7 @@ We have tested the code on Ubuntu 16.04, 18.04, and 20.04 machines. It is likely
 Depending on your Linux distro this should already be preinstalled. This dependency is due to the requirements of CARLA 0.9.9 rather than any aspect of TestPilot.
 
 ## SNPE
-1. Create a Qualcomm developer at https://myaccount.qualcomm.com/signup?target=https%3A%2F%2Fdeveloper.qualcomm.com
+1. Create a Qualcomm developer account at https://myaccount.qualcomm.com/signup?target=https%3A%2F%2Fdeveloper.qualcomm.com
 2. Download SNPE version 1.25.1.310 from: https://developer.qualcomm.com/download/qualcomm-neural-processing-sdk-ai-v1251?referrer=node/34505
 3. Unzip the download `snpe-1.25.1.zip` into `testpilot/testpilot0.5`
 
