@@ -77,6 +77,7 @@ Get CARLA from https://github.com/carla-simulator/carla/releases. We have valida
 3. Run `python3 demo.py`
 
 Optionally run `python3 demo.py --help` for more options like starting multiple agents.
+Here is an example of 4 TestPilot agents running together:
 <p align="center">
   <img src="multi-op.gif"/>
 </p>
