@@ -86,7 +86,8 @@ def simulate(client, testpilots, waypoints, seed, draw=False):
     def cleanup():
         for sensor in sensor_list:
             sensor.destroy()
-        client.apply_batch([carla.command.DestroyActor(x.id) for x in actor_list])
+        for actor in actor_list:
+            actor.destroy()
 
     np.random.seed(seed)
     world = client.get_world()
