@@ -17,7 +17,7 @@ into an OpenCL memory buffer. A handful of additional modifications were made to
 Deploying the planning and control elements together with the perception pipeline in a simulation environment requires further refinements. The perception and planning elements use a real-time clock to stamp vehicle-state messages. However, the simulation clock does not necessarily match wall-clock time. To address this problem, TestPilot receives a clock signal from the simulator. Furthermore, OpenPilot heavily utilizes asynchronous message passing; this induces non-determinism in the execution order of the control stack. In order to improve the repeatability of the experiments, TestPilot forces sequential execution of the control components. Lastly, OpenPilot utilizes a PID controller operating at 100Hz to actuate steering and throttle mechanisms and track the desired state (updated by the planning module at 20Hz). In order to avoid significant time costs and execute the simulator at 20Hz, TestPilot sends its planning module's desired state to the simulator, and we perform tracking on the simulator side.
 
 ### Other notes
-Valgrind and GDB will work if you enabled Docker to run in priviledged mode. 
+Valgrind and GDB will work if you enabled Docker to run in privileged mode. 
 
 ## Citing
 
