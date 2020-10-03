@@ -59,7 +59,7 @@ Dependencies are detailed in requirements.txt
 Newer versions of these libraries likely work but have not been tested.
 
 ## CARLA (to run the demo)
-Get CARLA from https://github.com/carla-simulator/carla/releases. We have validated TestPilot with CARLA releases 0.9.6 and 0.9.9.
+Get CARLA from https://github.com/carla-simulator/carla/releases. We have validated TestPilot with CARLA releases 0.9.6, 0.9.9.4, and 0.9.10.1. Note that for 0.9.9.x and above, visuals and weather look best using Vulkan instead of OpenGL when running CARLA. 
 
 
 # Setup

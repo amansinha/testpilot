@@ -32,6 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import carla
 import queue
 
+CARLA_VERSION = [int(x) for x in carla.__file__.split('-')[-4].split('.')]
+assert(CARLA_VERSION[0]==0 and CARLA_VERSION[1]==9), 'TestPilot works with Carla 0.9.x'
+apply_velocity = carla.command.ApplyVelocity if CARLA_VERSION[2]<10 else carla.command.ApplyTargetVelocity
+apply_angular_velocity = carla.command.ApplyAngularVelocity if CARLA_VERSION[2]<10 else carla.command.ApplyTargetAngularVelocity
+
 
 class CarlaSyncMode(object):
     """
@@ -133,7 +138,7 @@ def initialize_velocities_batch(vehicles, vels, client):
     for vehicle, vel in zip(vehicles, vels):
         rot = vehicle.get_transform().rotation
         fv = rot.get_forward_vector()
-        batch.append(carla.command.ApplyVelocity(vehicle, vel*fv))
+        batch.append(apply_velocity(vehicle, vel*fv))
     for response in client.apply_batch_sync(batch):
         if response.has_error():
             assert(1 == 0), response.error
@@ -164,8 +169,8 @@ def _set_ego_controls_batch(vehicle, inputs):
     rot.pitch -= 90
     rot.yaw += inputs[3]
     fv = rot.get_forward_vector()
-    return [carla.command.ApplyVelocity(vehicle, inputs[0]*fv),
-            carla.command.ApplyAngularVelocity(vehicle, inputs[2]*vv)]
+    return [apply_velocity(vehicle, inputs[0]*fv),
+            apply_angular_velocity(vehicle, inputs[2]*vv)]
 
 
 def get_waypoints(client, startpose, waypoint_separation=20., max_distance=1050):

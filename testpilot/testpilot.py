@@ -78,7 +78,7 @@ class TestPilot(object):
 
     def step(self, cnt, image_rgb):
         if cnt == 0:
-            for _ in range(12):
+            for _ in range(15):
                 Utils.send_image(self.socket, image_rgb)
             self.speed = self.v0
             self.steering_angle = 0.
