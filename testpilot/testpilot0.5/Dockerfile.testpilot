@@ -62,9 +62,11 @@ RUN ./install.sh -s silent.cfg
 
 # isntall python utilities
 WORKDIR /tmp
-RUN pip install numpy==1.11.2 scipy==0.18.1 matplotlib==2.1.2 Cython scikit-build
+RUN pip install numpy==1.11.2 scipy==0.18.1 matplotlib==2.1.2 Cython==0.27.3 scikit-build==0.11.1
 RUN apt-get install -y python-h5py
 RUN pip install markdown==2.6.8
+RUN pip install futures==3.3.0 enum34==1.1.6 six==1.10.0 setuptools==39.1.0 protobuf==3.13.0
+RUN pip install grpcio==1.27.2
 COPY requirements_openpilot.txt /tmp/
 RUN pip install -r /tmp/requirements_openpilot.txt
 ENV PYTHONPATH /tmp/openpilot:$PYTHONPATH
