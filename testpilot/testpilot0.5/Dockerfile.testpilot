@@ -60,13 +60,16 @@ RUN rm silent.cfg
 COPY silent.cfg .
 RUN ./install.sh -s silent.cfg
 
-# isntall python utilities
+# install python utilities
 WORKDIR /tmp
 RUN pip install numpy==1.11.2 scipy==0.18.1 matplotlib==2.1.2 Cython==0.27.3 scikit-build==0.11.1
 RUN apt-get install -y python-h5py
 RUN pip install markdown==2.6.8
+# grpc requirements (for tensorflow)
 RUN pip install futures==3.3.0 enum34==1.1.6 six==1.10.0 setuptools==39.1.0 protobuf==3.13.0
 RUN pip install grpcio==1.27.2
+# more tensorflow requirements
+RUN pip install astor==0.8.1 absl-py==0.11.0 gast==0.4.0 mock==4.0.3 termcolor==1.1.0 markupsafe==1.1.1 keras-preprocessing==1.1.2 keras-applications==1.0.8 backports.weakref==1.0.post1
 COPY requirements_openpilot.txt /tmp/
 RUN pip install -r /tmp/requirements_openpilot.txt
 ENV PYTHONPATH /tmp/openpilot:$PYTHONPATH
